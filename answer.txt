@@ -1,0 +1,19 @@
+9.Constructors of whole classes and parent classes 
+    Which classes are aggregates of other classes?
+        Answer: Media class is aggregate of Book and Disc classes, and Disc class is aggregate of CompactDisc, DigitalVideoDisc classes
+
+10. Unique item in a list
+    When overriding the equals() method of the Object class, you will have to cast the Object parameter obj to the type of Object that you are dealing with. For example, in the Media class, you must cast the Object obj to a Media, and then check the equality of the two objects’ attributes as the above requirements (i.e. title for Media; title and length for Track). If the passing object is not an instance of Media, what happens?
+        Answer: If the passing object is not an instance of Media, there will be an error and the function cannot run
+
+12. Sort Media in the cart
+    Question: Alternatively, to compare items in the cart, instead of using Comparator, we can use the Comparable interface and override the compareTo()method. You can refer to the Java docs to see the information of this interface.
+    Suppose we are taking this Comparable interface approach. 
+    What class should implement the Comparable interface? 
+        Answer: Cart, Store classes should implement the Comparable interface.
+    In those classes, how should you implement the compareTo()method be to reflect the ordering that we want?
+        Answer: Compares the item you want to add or the item you want to remove with all the items in your cart or in your store. If the item already exists, it cannot be added. If the item does not exist, it cannot be removed. 
+    Can we have two ordering rules of the item (by title then cost and by cost then title) if we use this Comparable interface approach? 
+        Answer: Yes, compare alphabetically.
+    Suppose the DVDs has a different ordering rule from the other media types, that is by title, then decreasing length, then cost. How would you modify your code to allow this?
+        Answer: Add another toString() function, use that to compare and order.
