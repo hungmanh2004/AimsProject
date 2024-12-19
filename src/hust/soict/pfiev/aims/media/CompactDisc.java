@@ -2,6 +2,10 @@ package hust.soict.pfiev.aims.media;
 //import java.lang.reflect.Array;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
+import hust.soict.pfiev.aims.exception.PlayerException;
+
 public class CompactDisc extends Disc implements Playable {
     private String artist;
     private ArrayList<Track> tracks = new ArrayList<>();
@@ -58,11 +62,19 @@ public class CompactDisc extends Disc implements Playable {
         return "CD - " + getTitle() + " - " + getCategory() + " - " + getDirector() + " - " + artist + " - " + getLength() + ": " + getCost() + "$";
     }
 
-    public void play() {
-        System.out.println("Playing CD: " + this.getTitle());
-        System.out.println("CD length: " + this.getLength());
-        for(Track track : tracks) {
-            track.play();
+    @Override
+    public void play() throws PlayerException {
+        try {
+            if (this.getTitle() == null || this.getTitle().isEmpty()) {
+                throw new PlayerException("Title is missing");
+            }
+            System.out.println("Playing CD: " + this.getTitle());
+            System.out.println("CD length: " + this.getLength());
+        } catch (PlayerException e) {
+            System.err.println("PlayerException caught: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
     }
 }
