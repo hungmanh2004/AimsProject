@@ -1,9 +1,12 @@
 package hust.soict.pfiev.aims;
 
 import hust.soict.pfiev.aims.cart.Cart;
+import hust.soict.pfiev.aims.exception.PlayerException;
 import hust.soict.pfiev.aims.media.*;
 import hust.soict.pfiev.aims.store.Store;
 import java.util.*;
+
+import javax.swing.JOptionPane;
 
 public class Aims {
     public static void showMenu() {
@@ -57,6 +60,18 @@ public class Aims {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        try {
+            Media media = cart.getItemsOrdered().get(0); // Assuming there's at least one media item
+            if (media instanceof Playable) {
+                ((Playable) media).play();
+            } else {
+                System.out.println("This media cannot be played.");
+            }
+        } catch (PlayerException e) {
+            System.err.println("PlayerException caught: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
         // in Store
         DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Matrix", "Action", "Wachowski Brothers", 136, 19.99f);
         cart.addMedia(dvd1);
@@ -214,7 +229,7 @@ public class Aims {
                         for(Media item : store.getAvailableMedias()) {
                             if(item.getTitle().equals(command)) {
                                 cart.addMedia(item);
-                                System.out.println("Cart's quantity: " + cart.getItems().size());
+                                System.out.println("Cart's quantity: " + cart.getItemsOrdered().size());
                             }
                         }
                         break;
@@ -236,7 +251,7 @@ public class Aims {
                 }
                 break;
             case 3:
-                System.out.println(cart.getItems());
+                System.out.println(cart.getItemsOrdered());
                 cartMenu();
                 int choice2 = sc.nextInt();
                 switch(choice2) {
@@ -262,11 +277,11 @@ public class Aims {
                         switch(command) {
                             case "title":
                                 cart.sortByTitle();
-                                System.out.println(cart.getItems());
+                                System.out.println(cart.getItemsOrdered());
                                 break;
                             case "cost":
                                 cart.sortByCost();
-                                System.out.println(cart.getItems());
+                                System.out.println(cart.getItemsOrdered());
                                 break;
                         }
                         break;

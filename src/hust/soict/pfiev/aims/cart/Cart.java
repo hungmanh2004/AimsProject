@@ -2,9 +2,11 @@ package hust.soict.pfiev.aims.cart;
 import java.util.*;
 
 import hust.soict.pfiev.aims.media.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Cart {
-    private ArrayList<Media> itemsOrdered = new ArrayList<>();
+    private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
     private static final int MAX_NUMBERS_ORDERED = 20;
 
     // Them DVD vào gio hang
@@ -92,7 +94,7 @@ public class Cart {
     }
 
     // Getter to access items in the cart
-    public ArrayList<Media> getItems() {
+    public ObservableList<Media> getItemsOrdered() {
         return itemsOrdered;
     }
 }
